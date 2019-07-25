@@ -56,12 +56,28 @@ def update():
         if i.handleCollision(player.box.rect):
             score += 1
 
+    if score == 10:
+        myFont = pygame.font.SysFont("Comic Sans", 100)
+        image = myFont.render("You Win!", 1, (255, 255, 255, 255))
+        screen.blit(image, (512, 360))
+        pygame.display.flip()
+        try:
+            while True:
+                pygame.event.pump()
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_ESCAPE]:
+                    raise Exception("Yolo")
+                pygame.time.delay(10)
+        except e:
+            pygame.display.quit()
+
 
 def render():
     screen.fill(pygame.Color("dark blue"))
     screen.fill(player.box.color, player.box.rect)
     for i in objectives:
         screen.fill(i.box.color, i.box.rect)
+
     myFont = pygame.font.SysFont("Comic Sans", 24)
     image = myFont.render("Score: " + str(score),1,(255, 255, 255, 255))
     screen.blit(image, (400, 75))
