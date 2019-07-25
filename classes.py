@@ -2,15 +2,12 @@
 # other comment
 
 import pygame
+import random
 
 class Box:
     def __init__(self):
         self.rect = pygame.Rect(50,50,50,50)
         self.color = pygame.Color("blue")
-
-
-    def colorChange(self):
-        self.color = pygame.Color(255, 0, 0)
 
 
 class Player:
@@ -32,16 +29,13 @@ class Player:
 class Objective:
     def __init__(self):
         self.box = Box()
-        self.counter = 121
 
 
     def handleCollision(self,rect):
         if self.box.rect.colliderect(rect):
-            self.counter = 0
+            self.boxTeleport()
+            return True
+        return False
 
-    def wait(self):
-        self.counter += 1
-        if self.counter <= 120:
-            self.box.colorChange()
-        if self.counter > 120:
-            self.box.color = pygame.Color("blue")
+    def boxTeleport(self):
+        self.box.rect.center = ((random.randint(0, 1024), random.randint(0, 720)))

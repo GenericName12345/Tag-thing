@@ -6,6 +6,8 @@ from pygame.locals import *
 from classes import Box, Objective, Player
 import random
 
+score = 0
+
 pygame.init()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((1024, 720))
@@ -38,6 +40,7 @@ for i in objectives:
 
 
 def update():
+    global score
     pygame.event.pump()
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
@@ -50,8 +53,8 @@ def update():
         player.move(4)
 
     for i in objectives:
-        i.handleCollision(player.box.rect)
-        i.wait()
+        if i.handleCollision(player.box.rect):
+            score += 1
 
 
 def render():
@@ -59,6 +62,9 @@ def render():
     screen.fill(player.box.color, player.box.rect)
     for i in objectives:
         screen.fill(i.box.color, i.box.rect)
+    myFont = pygame.font.SysFont("Comic Sans", 24)
+    image = myFont.render("Score: " + str(score),1,(255, 255, 255, 255))
+    screen.blit(image, (400, 75))
 
 def main():
     while True:
