@@ -16,15 +16,11 @@ class Player:
         self.box.rect = pygame.Rect(30, 30, 30, 30)
         self.box.color = pygame.Color(random.randint(0,255), random.randint(0,255), random.randint(0,255))
 
-    def move(self, dir):
-        if dir is 1:
-            self.box.rect.move_ip(5,0)
-        if dir is 2:
-            self.box.rect.move_ip(-5,0)
-        if dir is 3:
-            self.box.rect.move_ip(0,-5)
-        if dir is 4:
-            self.box.rect.move_ip(0,5)
+class whiteBox:
+    def __init__(self):
+        self.box = Box()
+        self.box.rect = pygame.Rect(90, 90, 160, 60)
+        self.box.color = pygame.Color(255, 255, 255)
 
 
 class Objective:

@@ -2,9 +2,16 @@
 # is happening
 
 import sys, pygame
+
 from pygame.locals import *
+
 from classes import Box, Objective, Player
+
+import sys, pygame
+from pygame.locals import *
+from classes import Box, Objective, Player, whiteBox
 import random
+
 
 score = 0
 score2 = 0
@@ -14,7 +21,12 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((1024, 720))
 player = Player()
 player2 = Player()
-player.box.rect.center = (75, 175)
+player.box.rect.center = (996, 690)
+whiteBox1 = whiteBox()
+whiteBox2 = whiteBox()
+whiteBox1.box.rect.center = (260, 80)
+whiteBox2.box.rect.center = (660, 80)
+
 objectives = []
 objectives.append(Objective())
 objectives.append(Objective())
@@ -37,6 +49,10 @@ def collidingWithFriends(rect):
         if rect.box.rect.colliderect(i.box.rect) and rect is not i:
             return True
     return False
+    for j in objectives:
+        if rect.box.rect.colliderect(j.whiteBox.rect) and rect is not j:
+            return True
+    return False
 
 
 count = 0
@@ -55,21 +71,21 @@ def update():
     pygame.event.pump()
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player.move(2)
+        player.box.rect.move_ip(-5, 0)
     if keys[pygame.K_RIGHT]:
-        player.move(1)
+        player.box.rect.move_ip(5, 0)
     if keys[pygame.K_UP]:
-        player.move(3)
+        player.box.rect.move_ip(0, -5)
     if keys[pygame.K_DOWN]:
-        player.move(4)
+        player.box.rect.move_ip(0, 5)
     if keys[pygame.K_a]:
-        player2.move(2)
+        player2.box.rect.move_ip(-5, 0)
     if keys[pygame.K_d]:
-        player2.move(1)
+        player2.box.rect.move_ip(5, 0)
     if keys[pygame.K_w]:
-        player2.move(3)
+        player2.box.rect.move_ip(0, -5)
     if keys[pygame.K_s]:
-        player2.move(4)
+        player2.box.rect.move_ip(0, 5)
 
     for i in objectives:
         if i.handleCollision(player.box.rect):
@@ -114,6 +130,9 @@ def render():
     screen.fill(pygame.Color("dark blue"))
     screen.fill(player.box.color, player.box.rect)
     screen.fill(player2.box.color, player2.box.rect)
+    screen.fill(whiteBox1.box.color, whiteBox1.box.rect)
+    screen.fill(whiteBox2.box.color, whiteBox2.box.rect)
+
     for i in objectives:
         #screen.fill(i.box.color, i.box.rect)
         pygame.draw.circle(screen, i.box.color, i.box.rect.center, i.box.rect.width)
